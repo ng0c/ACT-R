@@ -1,25 +1,67 @@
 (clear-all)
 
 (define-model past-tense
+   ; All parameters for the model
    (sgp
-     :V t
+     ; v = verbose, controls whether the trace of the model is output.
+     ; t is the default value, if :v is set to nil then no output is visible
+     :V t 
+
+     ; specifying that retrieval requests will always take 50ms to complete
      :esc T
+
+     ; setting the utility learning trace mechanism in the model
      :ul t 
+
+     ; optimised learning parameter
      :OL 6   
+
+     ; base-learning parameter (which are almost always set to 0.5)
      :BLL 0.5  
+
+     ; activation noise
      :ANs 0.1   
-     :EGs 0.2   
+
+     ; controlling noise in utility
+     :EGs 0.2
+
+     ; maximum associative strength - spreading activation   
      :mas  3.5 
+
+     ; latency factor
      :LF 0.5
+
+     ; the retrieval threshold sets the minimum activation a chunk can have 
+     ; and still be retrieved
      :RT 0.5
+
+     ; production compilation can be turned on/off with :epl. Currently, compilation
+     ; is turned on.
+     ; Note: this has relatively little effect on the accuracy of recall but 
+     ; turning it on greatly increases the speed-up over trials in the recall time.
      :epl t
+
+     ; learning rate, typically set to 0.2 but can be adjusted if needed
      :alpha 0.1 
+
+     ; production compilation trace - when set to t, :v also need to be set to t.
+     ; you will see the system print out the new productions as 
+     ; they are composed or the reason why two productions could not be composed.
      :pct t
+
+     ; utility learning for productions
      :iu 5    
+
+     ; normalize chunk names after run
+     ; This parameter does not affect the model’s performance on the tasks, but 
+     ; it does affect the actual time it takes to run the simulation.
+     ; can be useful for debugging (see page 267 for details).
      :ncnar nil
+
+     ; related to previous/current productions in the imaginal module
      :do-not-harvest imaginal)
   
-  (chunk-type past-tense verb stem suffix)
+(chunk-type past-tense verb stem suffix)
   (chunk-type goal state)
   
   (define-chunks 
@@ -29,6 +71,18 @@
 
   (declare-buffer-usage goal goal state)
   (declare-buffer-usage imaginal past-tense :all)
+
+(p start-search
+   =goal>
+     isa    goal
+     state    start
+   =imaginal>
+     isa    past-tense
+     verb    =word
+   ==>
+   =goal>
+     state    done
+)
 
 ;;; When there is a stem and no suffix we have an irregular
 
@@ -81,3 +135,4 @@
 
 (spp no-past-tense-formed :reward 3.9) 
 )
+
