@@ -27,7 +27,7 @@
 
 ; "start", "attend", "respond", "done", "goal" is the name of the different chunks
 ; "isa chunk" iis the optional declaration of a chunk-type to describe the chunk being created.
-; goal = chunk name, isa chunk/read-letters = chunk-type name, state = slot name, state = slot value
+; goal = chunk name, isa chunk/read-letters = chunk-type name, state = slot name, start = slot value
 (add-dm 
  (start isa chunk) 
  (attend isa chunk)

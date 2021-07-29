@@ -60,7 +60,8 @@
 
      ; related to previous/current productions in the imaginal module
      :do-not-harvest imaginal)
-  
+; commands for creating the model's initial knowledge
+; with chunks amd productions  
 (chunk-type past-tense verb stem suffix)
   (chunk-type goal state)
   
@@ -71,18 +72,6 @@
 
   (declare-buffer-usage goal goal state)
   (declare-buffer-usage imaginal past-tense :all)
-
-(p start-search
-   =goal>
-     isa    goal
-     state    start
-   =imaginal>
-     isa    past-tense
-     verb    =word
-   ==>
-   =goal>
-     state    done
-)
 
 ;;; When there is a stem and no suffix we have an irregular
 
@@ -135,4 +124,3 @@
 
 (spp no-past-tense-formed :reward 3.9) 
 )
-

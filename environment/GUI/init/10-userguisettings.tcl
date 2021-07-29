@@ -15,6 +15,8 @@ if $size_mismatch {
                                          -message "The screen resolution is not the same as it was the last time the Environment was used.  Should the window positions reset to the defaults?"]
 } else { set reset_window_sizes 0}
 if {$reset_window_sizes != "yes"} {
+  set window_config(.buffer_history) 530x290+455+350
+  set changed_window_list(.buffer_history) 1
   set window_config(.visicon) 700x150+370+350
   set changed_window_list(.visicon) 1
   set window_config(.graphic_trace) 870x500+285+200
@@ -23,7 +25,7 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.options) 1
   set window_config(.text_trace_history) 714x340+333+280
   set changed_window_list(.text_trace_history) 1
-  set window_config(.buffers) 470x240+485+330
+  set window_config(.buffers) 470x240+970+173
   set changed_window_list(.buffers) 1
   set window_config(.retrieval_history) 670x380+385+300
   set changed_window_list(.retrieval_history) 1
@@ -33,11 +35,11 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.param_viewer) 1
   set window_config(.pick_buffers) 200x340+569+269
   set changed_window_list(.pick_buffers) 1
-  set window_config(.stepper) 500x550+470+175
+  set window_config(.stepper) 753x550+240+90
   set changed_window_list(.stepper) 1
   set window_config(.declarative) 420x300+510+300
   set changed_window_list(.declarative) 1
-  set window_config(.reload_response) 500x230+470+335
+  set window_config(.reload_response) 1098x328+286+544
   set changed_window_list(.reload_response) 1
   set window_config(.event_queue) 800x180+320+360
   set changed_window_list(.event_queue) 1
