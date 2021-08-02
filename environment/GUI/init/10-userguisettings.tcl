@@ -33,13 +33,15 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.control_panel) 1
   set window_config(.param_viewer) 400x330+520+300
   set changed_window_list(.param_viewer) 1
+  set window_config(.audicon) 870x150+285+350
+  set changed_window_list(.audicon) 1
   set window_config(.pick_buffers) 200x340+569+269
   set changed_window_list(.pick_buffers) 1
   set window_config(.stepper) 753x550+240+90
   set changed_window_list(.stepper) 1
   set window_config(.declarative) 420x300+510+300
   set changed_window_list(.declarative) 1
-  set window_config(.reload_response) 1098x328+286+544
+  set window_config(.reload_response) 546x328+129+380
   set changed_window_list(.reload_response) 1
   set window_config(.event_queue) 800x180+320+360
   set changed_window_list(.event_queue) 1

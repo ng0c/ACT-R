@@ -73,6 +73,20 @@
   (declare-buffer-usage goal goal state)
   (declare-buffer-usage imaginal past-tense :all)
 
+(p start-search
+    =goal>
+      isa goal
+      state start
+    =imaginal>
+      isa past-tense
+      verb =word
+  ==>
+  =goal>
+    state done
+  +retrieval>
+    isa past-tense
+    verb =word
+)
 ;;; When there is a stem and no suffix we have an irregular
 
 (p past-tense-irregular
@@ -84,9 +98,18 @@
      verb   =word
      stem   =past
      suffix blank
+   =retrieval>
+     isa past-tense
+     verb =word
+     stem =past
+     suffix =blank
    ==>
    =goal> 
-     state  nil)
+     state  nil
+   +retrieval>
+     ISA past-tense
+     verb =past
+   )
 
 (spp past-tense-irregular :reward 5)
 
@@ -101,10 +124,19 @@
      verb   =stem
      stem   =stem
      suffix =suffix
+   =retrieval>
+     isa past-tense
+     verb =stem
+     stem =stem
+     suffix =suffix
    !safe-eval! (not (eq =suffix 'blank)) 
   ==>
    =goal> 
-     state  nil)
+     state  nil
+   +retrieval>
+     ISA past-tense
+     verb =stem
+)
 
 (spp past-tense-regular :reward 4.2)
 
@@ -118,6 +150,9 @@
      isa    past-tense
      stem   nil
      suffix nil
+   =retrieval>
+     isa past-tense
+     verb =word
   ==>
    =goal> 
      state  nil)
