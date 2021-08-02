@@ -60,20 +60,26 @@
 
      ; related to previous/current productions in the imaginal module
      :do-not-harvest imaginal)
-; commands for creating the model's initial knowledge
-; with chunks amd productions  
+
+; verb = base form
+; stem/suffix = past tense
 (chunk-type past-tense verb stem suffix)
   (chunk-type goal state)
-  
+
+; Define-chunks is similar to add-dm which has been used in all of the
+; previous models to create chunks and add them to the model’s declarative memory. The
+; difference between define-chunks and add-dm is that define-chunks creates the chunks
+; specified but does not add them to the model’s declarative memory
   (define-chunks 
       (starting-goal isa goal state start)
       (start isa chunk) (blank isa chunk) (done isa chunk))
 
-
   (declare-buffer-usage goal goal state)
   (declare-buffer-usage imaginal past-tense :all)
 
-(p start-search
+(goal-focus starting-goal)
+
+(p start
     =goal>
       isa goal
       state start
@@ -81,12 +87,10 @@
       isa past-tense
       verb =word
   ==>
-  =goal>
-    state done
-  +retrieval>
-    isa past-tense
-    verb =word
+    =goal>
+      state done
 )
+
 ;;; When there is a stem and no suffix we have an irregular
 
 (p past-tense-irregular
@@ -98,18 +102,9 @@
      verb   =word
      stem   =past
      suffix blank
-   =retrieval>
-     isa past-tense
-     verb =word
-     stem =past
-     suffix =blank
    ==>
    =goal> 
-     state  nil
-   +retrieval>
-     ISA past-tense
-     verb =past
-   )
+     state  nil)
 
 (spp past-tense-irregular :reward 5)
 
@@ -124,19 +119,10 @@
      verb   =stem
      stem   =stem
      suffix =suffix
-   =retrieval>
-     isa past-tense
-     verb =stem
-     stem =stem
-     suffix =suffix
    !safe-eval! (not (eq =suffix 'blank)) 
   ==>
    =goal> 
-     state  nil
-   +retrieval>
-     ISA past-tense
-     verb =stem
-)
+     state  nil)
 
 (spp past-tense-regular :reward 4.2)
 
@@ -150,9 +136,6 @@
      isa    past-tense
      stem   nil
      suffix nil
-   =retrieval>
-     isa past-tense
-     verb =word
   ==>
    =goal> 
      state  nil)
