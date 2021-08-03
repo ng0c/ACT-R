@@ -27,6 +27,8 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.text_trace_history) 1
   set window_config(.buffers) 470x240+970+173
   set changed_window_list(.buffers) 1
+  set window_config(.ptrace) 410x370+515+300
+  set changed_window_list(.ptrace) 1
   set window_config(.retrieval_history) 670x380+385+300
   set changed_window_list(.retrieval_history) 1
   set window_config(.control_panel) 235x783+8+25
@@ -37,18 +39,20 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.audicon) 1
   set window_config(.pick_buffers) 200x340+569+269
   set changed_window_list(.pick_buffers) 1
-  set window_config(.stepper) 753x550+240+90
+  set window_config(.stepper) 753x550+244+148
   set changed_window_list(.stepper) 1
+  set window_config(.audicon_history) 734x300+353+300
+  set changed_window_list(.audicon_history) 1
   set window_config(.declarative) 420x300+510+300
   set changed_window_list(.declarative) 1
-  set window_config(.reload_response) 546x328+129+380
+  set window_config(.reload_response) 888x328+146+268
   set changed_window_list(.reload_response) 1
   set window_config(.event_queue) 800x180+320+360
   set changed_window_list(.event_queue) 1
-  set window_config(.copyright) 1x1+520+305
-  set changed_window_list(.copyright) 1
   set window_config(.procedural) 500x400+470+250
   set changed_window_list(.procedural) 1
+  set window_config(.copyright) 1x1+520+305
+  set changed_window_list(.copyright) 1
 }
 set gui_options(p_selected) #44DA22
 set gui_options(p_matched) #FCA31D
