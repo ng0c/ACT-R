@@ -77,7 +77,7 @@
   (declare-buffer-usage goal goal state)
   (declare-buffer-usage imaginal past-tense :all)
 
-; goal-focus starting-goal)
+(goal-focus starting-goal)
 
 (p start
     =goal>
@@ -86,8 +86,6 @@
     =imaginal>
       isa past-tense
       verb =word
-      stem nil
-      suffix nil
   ==>
     =goal>
       state done
@@ -105,6 +103,11 @@
      stem   =past
      suffix blank
    ==>
+   +retrieval>
+    isa past-tense
+    verb =word
+    stem =past
+    suffix blank
    =goal> 
      state  nil)
 
@@ -123,6 +126,11 @@
      suffix =suffix
    !safe-eval! (not (eq =suffix 'blank)) 
   ==>
+   +retrieval>
+    isa past-tense
+    verb =stem
+    stem =stem
+    suffix =suffix
    =goal> 
      state  nil)
 
