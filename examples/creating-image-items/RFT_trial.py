@@ -17,19 +17,19 @@ actr.load_act_r_model(
     "ACT-R:examples;creating-image-items;creating-an-image-model.lisp")
 
 
-def click_brain(text, pos):
+def click_cake(text, pos):
     actr.model_output('Clicked image %s at %d %d' % (text, pos[0], pos[1]))
 
 
-actr.add_command("click-brain-py", click_brain,
+actr.add_command("click-cake", click_cake,
                  "Example function for image click action. Do not call.")
 
 
-def click_brain_2(value):
-    actr.model_output('Clicked the second brain image given value %s' % value)
+def click_dog(value):
+    actr.model_output('Clicked the cake image given value %s' % value)
 
 
-actr.add_command("click-brain-2-py", click_brain_2,
+actr.add_command("click-dog", click_dog,
                  "Example function for image click action with parameters. Do not call.")
 
 
@@ -38,20 +38,39 @@ def run_test(visible=False):
     actr.reset()
 
     win = actr.open_exp_window(
-        "image test", visible=visible, width=310, height=420)
+        "image test", visible=visible, width=1000, height=1000)
 
     actr.install_device(win)
 
     actr.start_hand_at_mouse()
 
-    actr.add_image_to_exp_window(
-        win, "logo", "smalllogo.gif", x=10, y=10, width=288, height=142)
-
     actr.add_items_to_exp_window(win, actr.create_image_for_exp_window(
-        win, "brain", "ref-brain.gif", x=10, y=160, width=128, height=128, action="click-brain-py"))
+        win, "cake", "cake.gif", x=400, y=200,
+                                 width=390, height=390, action="click-cake"))
 
-    actr.add_image_to_exp_window(win, "brain-2", "ref-brain.gif", x=10, y=290,
-                                 width=128, height=128, action=["click-brain-2-py", "this string"])
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=0, y=0,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=0, y=160,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=190, y=0,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=10, y=310,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=600, y=10,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=200, y=310,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=400, y=420,
+                                 width=390, height=390, action=["click-dog", "this string"])
+
+    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=400, y=0,
+                                 width=390, height=390, action=["click-dog", "this string"])
 
     # run for the vision module to process the scene
     actr.run_n_events(2)

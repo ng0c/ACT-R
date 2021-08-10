@@ -6,6 +6,10 @@
 (sgp :esc t :lf .05)
 
 (chunk-type number number next)
+; arg1 = starting number
+; arg2 = the number to be added
+; sum = holding the current counted value
+; count = holding the amount that has been added so far
 (chunk-type add arg1 arg2 sum count)
 
 (add-dm

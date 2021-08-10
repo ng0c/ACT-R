@@ -86,9 +86,16 @@
     =imaginal>
       isa past-tense
       verb =word
+      stem nil
+      suffix nil
   ==>
     =goal>
       state done
+    +retrieval>
+      isa past-tense
+      verb =word
+      stem stem
+      suffix suffix
 )
 
 ;;; When there is a stem and no suffix we have an irregular

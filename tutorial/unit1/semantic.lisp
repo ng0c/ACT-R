@@ -39,6 +39,8 @@
  (g2 ISA is-member object canary category animal)
  (g3 ISA is-member object canary category fish))
 
+; check if there is an object and category slot in the goal buffer
+; and that there's no judgement slot
 (p initial-retrieve
    =goal>
       ISA         is-member
@@ -54,7 +56,9 @@
       attribute   category
 )
 
-
+; check if object and category have values and that the judgement slot have
+; the value pending. Then checks if the object and attribute slots are in the
+; retrival buffer and contains the same values
 (P direct-verify
    =goal>
       ISA         is-member

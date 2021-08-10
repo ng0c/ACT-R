@@ -64,7 +64,22 @@
  ; action as a “buffer request” where buffer is the name of the buffer indicated 
  ; e.g. a visual-location request. Any buffer request with a “+” action will also 
  ; cause that buffer to be cleared.
+ ; This :attended specification is called a request parameter. It acts like a slot 
+ ; in the request, but does not correspond to a slot in the chunk which was created. 
+ ; A request parameter is valid for any request to a buffer regardless
+ ; of any chunk-type that is specified (or when no chunk-type is specified as 
+ ; is the case here). Request parameters are used to supply general information to 
+ ; the module about a request which may not correspond to any information that 
+ ; would be included in a chunk that is placed into a buffer. A request parameter 
+ ; is specific to a particular buffer and will always start with a “:” which
+ ; distinguishes it from an actual slot of some chunk-type.
    +visual-location>
+      ; the :attended request parameter to specify whether the
+      ; vision module should try to find the location of an object which the model 
+      ; has previously looked at (attended to) or not.
+      ; nil = has not attended
+      ; t = has attended
+      ; new = has never attended
       :attended    nil
    ; If the buffer name is prefixed with the character "=" then the action 
    ; will cause the production to immediately modify the chunk currently in 
