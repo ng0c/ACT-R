@@ -1,47 +1,51 @@
-# This is the Python code to run the task that goes along with the 
-# background-model. 
+# This is the Python code to run the task that goes along with the
+# background-model.
 #
 # It is a demonstration of creating and using an
 # image AGI item along with custom visicon features.
-# It assumes that the ref-brain.gif file is in the 
-# GUI/AGI-images directory if you use a visible window 
+# It assumes that the ref-brain.gif file is in the
+# GUI/AGI-images directory if you use a visible window
 # to see the images.
 #
 # To run the task call the run-test function.  It has one
-# optional parameter which if provided as any non-nil value 
+# optional parameter which if provided as any non-nil value
 # indicates the window should be visible.  The default is
-# to use a virtual window.  
+# to use a virtual window.
 
 import actr
 
-actr.load_act_r_model("ACT-R:examples;creating-image-items;background-model.lisp")
+actr.load_act_r_model(
+    "ACT-R:examples;creating-image-items;background-model.lisp")
 
-def run_test (visible=False):
+
+def run_test(visible=False):
 
     actr.reset()
-  
-    win = actr.open_exp_window("background test",visible=visible, width=390, height=390, x=100, y=100)
-    
+
+    win = actr.open_exp_window(
+        "background test", visible=visible, width=390, height=390, x=100, y=100)
+
     actr.install_device(win)
-    
+
     actr.start_hand_at_mouse()
-    
-    actr.add_image_to_exp_window(win, "background", "ref-brain.gif", x=0, y=0, width=390, height=390)
-    
+
+    actr.add_image_to_exp_window(
+        win, "background", "ref-brain.gif", x=0, y=0, width=390, height=390)
+
     for x in range(3):
         for y in range(3):
-            actr.add_visicon_features(["screen-x", 164 + (x * 130),"screen-y", 164 + (y * 130),
-                                       "height",128,"width",128,
-                                       "name",["'brain'","'brain-%d'"%(x + (y * 3))]])
-
+            actr.add_visicon_features(["screen-x", 164 + (x * 130), "screen-y", 164 + (y * 130),
+                                       "height", 128, "width", 128,
+                                       "name", ["'brain'", "'brain-%d'" % (x + (y * 3))]])
 
     # run for the vision module to process the scene
-    actr.run_n_events(2) 
-    
+    actr.run_n_events(2)
+
     actr.print_visicon()
-    
+
     # run for up to 5 seconds using real-time if the window is visible
     actr.run(10, visible)
+
 
 """
 >>> >>> background_image.run_test()

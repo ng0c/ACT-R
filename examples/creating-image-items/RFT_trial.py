@@ -1,36 +1,14 @@
-# This is the Python code to run the task that goes along with the
-# creating-an-image-model.
-#
-# It is a simple demonstration of creating and using the
-# image AGI item, and it assumes that the smalllogo.gif
-# and ref-brain.gif files are in the GUI/AGI-images directory
-# if you use a visible window to see the images.
-#
-# To run the task call the run_test function.  It has one
-# optional parameter which if provided as True indicates
-# the window should be visible.  The default is to use a virtual
-# window.
+# To run the task call the run-test function.  It has one
+# optional parameter which if provided as any non-nil value
+# indicates the window should be visible.  The default is
+# to use a virtual window.
 
 import actr
+from random import seed
+from random import random
 
 actr.load_act_r_model(
-    "ACT-R:examples;creating-image-items;creating-an-image-model.lisp")
-
-
-def click_cake(text, pos):
-    actr.model_output('Clicked image %s at %d %d' % (text, pos[0], pos[1]))
-
-
-actr.add_command("click-cake", click_cake,
-                 "Example function for image click action. Do not call.")
-
-
-def click_dog(value):
-    actr.model_output('Clicked the cake image given value %s' % value)
-
-
-actr.add_command("click-dog", click_dog,
-                 "Example function for image click action with parameters. Do not call.")
+    "ACT-R:examples;creating-image-items;RFT-model.lisp")
 
 
 def run_test(visible=False):
@@ -38,39 +16,27 @@ def run_test(visible=False):
     actr.reset()
 
     win = actr.open_exp_window(
-        "image test", visible=visible, width=1000, height=1000)
+        "oddity test", visible=visible, width=390, height=390, x=100, y=100)
 
     actr.install_device(win)
 
     actr.start_hand_at_mouse()
 
-    actr.add_items_to_exp_window(win, actr.create_image_for_exp_window(
-        win, "cake", "cake.gif", x=400, y=200,
-                                 width=390, height=390, action="click-cake"))
+    seed(1)
+    for _ in range(20):
+        value = random()
+        if value < 0.25:
+            actr.add_image_to_exp_window(
+                win, "background", "dog-set-1.gif", x=0, y=0, width=390, height=390)
+        else:
+            actr.add_image_to_exp_window(
+                win, "background", "dog-set-2.gif", x=0, y=0, width=390, height=390)
 
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=0, y=0,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=0, y=160,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=190, y=0,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=10, y=310,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=600, y=10,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=200, y=310,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=400, y=420,
-                                 width=390, height=390, action=["click-dog", "this string"])
-
-    actr.add_image_to_exp_window(win, "dog", "dog.gif", x=400, y=0,
-                                 width=390, height=390, action=["click-dog", "this string"])
+    for x in range(3):
+        for y in range(3):
+            actr.add_visicon_features(["screen-x", 164 + (x * 130), "screen-y", 164 + (y * 130),
+                                       "height", 128, "width", 128,
+                                       "name", ["'picture'", "'picture-%d'" % (x + (y * 3))]])
 
     # run for the vision module to process the scene
     actr.run_n_events(2)
@@ -78,176 +44,355 @@ def run_test(visible=False):
     actr.print_visicon()
 
     # run for up to 5 seconds using real-time if the window is visible
-    actr.run(5, visible)
+    actr.run(10, visible)
 
 
 """
->>> creating_an_image.run_test()
+>>> >>> background_image.run_test()
      0.000   ------                 Stopped because event limit reached
-Name              Att  Loc             Image  Kind   Height  Width  Value      Size
-----------------  ---  --------------  -----  -----  ------  -----  ---------  ----------
-VISUAL-LOCATION1  NEW  (374 524 1080)  T      IMAGE  128     128    "brain"    46.0
-VISUAL-LOCATION2  NEW  (374 654 1080)  T      IMAGE  128     128    "brain-2"  46.0
-VISUAL-LOCATION0  NEW  (454 381 1080)  T      IMAGE  142     288    "logo"     114.259995
-     0.000   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION VISUAL-LOCATION0 NIL
+Name              Att  Loc             Width  Height  Size   Name       Image  Kind   Value
+----------------  ---  --------------  -----  ------  -----  ---------  -----  -----  ------------
+CHUNK0            NEW  (164 164 1080)  128    128     46.0   "brain-0"
+CHUNK1            NEW  (164 294 1080)  128    128     46.0   "brain-3"
+CHUNK2            NEW  (164 424 1080)  128    128     46.0   "brain-6"
+CHUNK3            NEW  (294 164 1080)  128    128     46.0   "brain-1"
+CHUNK4            NEW  (294 294 1080)  128    128     46.0   "brain-4"
+CHUNK5            NEW  (294 424 1080)  128    128     46.0   "brain-7"
+VISUAL-LOCATION0  NEW  (295 295 1080)  390    390     419.0             T      IMAGE  "background"
+CHUNK6            NEW  (424 164 1080)  128    128     46.0   "brain-2"
+CHUNK7            NEW  (424 294 1080)  128    128     46.0   "brain-5"
+CHUNK8            NEW  (424 424 1080)  128    128     46.0   "brain-8"
+     0.000   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK1 NIL
      0.000   VISION                 visicon-update
      0.000   PROCEDURAL             CONFLICT-RESOLUTION
-     0.050   PROCEDURAL             PRODUCTION-FIRED ATTEND
-VISUAL-LOCATION0-0
-   KIND  IMAGE
-   VALUE  IMAGE
-   HEIGHT  142
-   WIDTH  288
-   SCREEN-X  454
-   SCREEN-Y  381
-   DISTANCE  1080
-   SIZE  114.259995
+     0.050   PROCEDURAL             PRODUCTION-FIRED FIND-START
+     0.050   PROCEDURAL             CLEAR-BUFFER GOAL
      0.050   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     0.050   PROCEDURAL             CLEAR-BUFFER VISUAL
+     0.050   VISION                 Find-location
+     0.050   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK0
+     0.050   GOAL                   SET-BUFFER-CHUNK GOAL CHUNK9
      0.050   PROCEDURAL             CONFLICT-RESOLUTION
-     0.135   VISION                 Encoding-complete VISUAL-LOCATION0-0 NIL
-     0.135   VISION                 SET-BUFFER-CHUNK VISUAL IMAGE0
-     0.135   PROCEDURAL             CONFLICT-RESOLUTION
-     0.185   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-INSTAN-LOC
-IMAGE0-0
-   SCREEN-POS  VISUAL-LOCATION0-0
-   VALUE  "logo"
-   HEIGHT  142
-   WIDTH  288
-   IMAGE  T
-     0.185   PROCEDURAL             CLEAR-BUFFER VISUAL
-     0.185   PROCEDURAL             CLEAR-BUFFER IMAGINAL
+     0.100   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK0-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  164
+   SCREEN-Y  164
+   DISTANCE  1080
+   SIZE  46.0
+     0.100   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     0.100   PROCEDURAL             CLEAR-BUFFER VISUAL
+     0.100   PROCEDURAL             CONFLICT-RESOLUTION
+     0.185   VISION                 Encoding-complete CHUNK0-0 NIL
+     0.185   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK10
      0.185   PROCEDURAL             CONFLICT-RESOLUTION
-     0.385   IMAGINAL               SET-BUFFER-CHUNK IMAGINAL CHUNK0
-     0.385   PROCEDURAL             CONFLICT-RESOLUTION
-     0.435   PROCEDURAL             PRODUCTION-FIRED MOVE
-     0.435   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     0.435   PROCEDURAL             CLEAR-BUFFER MANUAL
-     0.435   PROCEDURAL             CLEAR-BUFFER GOAL
-     0.435   MOTOR                  MOVE-CURSOR LOC CHUNK0-0
-     0.435   GOAL                   SET-BUFFER-CHUNK GOAL CHUNK1
+     0.235   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK10-0
+   NAME  "brain-0"
+   SCREEN-POS  CHUNK0-0
+   HEIGHT  128
+   WIDTH  128
+     0.235   PROCEDURAL             CLEAR-BUFFER VISUAL
+     0.235   PROCEDURAL             CLEAR-BUFFER MANUAL
+     0.235   MOTOR                  MOVE-CURSOR LOC CHUNK0-0
+     0.235   PROCEDURAL             CONFLICT-RESOLUTION
      0.435   PROCEDURAL             CONFLICT-RESOLUTION
+     0.485   PROCEDURAL             CONFLICT-RESOLUTION
+     0.585   PROCEDURAL             CONFLICT-RESOLUTION
      0.635   PROCEDURAL             CONFLICT-RESOLUTION
+     0.685   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     0.685   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     0.685   VISION                 Find-location
+     0.685   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK3
      0.685   PROCEDURAL             CONFLICT-RESOLUTION
-     0.785   PROCEDURAL             CONFLICT-RESOLUTION
-     0.835   PROCEDURAL             CONFLICT-RESOLUTION
-     0.885   PROCEDURAL             PRODUCTION-FIRED CLICK
-     0.885   PROCEDURAL             CLEAR-BUFFER GOAL
-     0.885   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     0.885   PROCEDURAL             CLEAR-BUFFER MANUAL
-     0.885   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     0.885   MOTOR                  CLICK-MOUSE
-     0.885   VISION                 Find-location
-     0.885   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION VISUAL-LOCATION1
-     0.885   PROCEDURAL             CONFLICT-RESOLUTION
-     0.935   PROCEDURAL             PRODUCTION-FIRED ATTEND
-VISUAL-LOCATION1-0
-   KIND  IMAGE
-   VALUE  IMAGE
+     0.735   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK3-0
+   NAME  "brain"
    HEIGHT  128
    WIDTH  128
-   SCREEN-X  374
-   SCREEN-Y  524
+   SCREEN-X  294
+   SCREEN-Y  164
    DISTANCE  1080
    SIZE  46.0
-     0.935   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     0.935   PROCEDURAL             CLEAR-BUFFER VISUAL
-     0.935   PROCEDURAL             CONFLICT-RESOLUTION
-     1.020   VISION                 Encoding-complete VISUAL-LOCATION1-0 NIL
-     1.020   VISION                 SET-BUFFER-CHUNK VISUAL IMAGE1
+     0.735   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     0.735   PROCEDURAL             CLEAR-BUFFER VISUAL
+     0.735   PROCEDURAL             CONFLICT-RESOLUTION
+     0.820   VISION                 Encoding-complete CHUNK3-0 NIL
+     0.820   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK11
+     0.820   PROCEDURAL             CONFLICT-RESOLUTION
+     0.870   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK11-0
+   NAME  "brain-1"
+   SCREEN-POS  CHUNK3-0
+   HEIGHT  128
+   WIDTH  128
+     0.870   PROCEDURAL             CLEAR-BUFFER VISUAL
+     0.870   PROCEDURAL             CLEAR-BUFFER MANUAL
+     0.870   MOTOR                  MOVE-CURSOR LOC CHUNK3-0
+     0.870   PROCEDURAL             CONFLICT-RESOLUTION
+     0.970   PROCEDURAL             CONFLICT-RESOLUTION
      1.020   PROCEDURAL             CONFLICT-RESOLUTION
-     1.070   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-INSTAN-LOC
-IMAGE1-0
-   SCREEN-POS  VISUAL-LOCATION1-0
-   VALUE  "brain"
+     1.120   PROCEDURAL             CONFLICT-RESOLUTION
+     1.170   PROCEDURAL             CONFLICT-RESOLUTION
+     1.220   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     1.220   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     1.220   VISION                 Find-location
+     1.220   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK6
+     1.220   PROCEDURAL             CONFLICT-RESOLUTION
+     1.270   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK6-0
+   NAME  "brain"
    HEIGHT  128
    WIDTH  128
-   IMAGE  T
-     1.070   PROCEDURAL             CLEAR-BUFFER VISUAL
-     1.070   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     1.070   PROCEDURAL             CONFLICT-RESOLUTION
-     1.085   PROCEDURAL             CONFLICT-RESOLUTION
-Image with id "logo" clicked at relative position 144 71
-     1.095   PROCEDURAL             CONFLICT-RESOLUTION
-     1.185   PROCEDURAL             CONFLICT-RESOLUTION
-     1.270   IMAGINAL               SET-BUFFER-CHUNK IMAGINAL CHUNK2
-     1.270   PROCEDURAL             CONFLICT-RESOLUTION
-     1.320   PROCEDURAL             PRODUCTION-FIRED MOVE
-     1.320   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     1.320   PROCEDURAL             CLEAR-BUFFER MANUAL
-     1.320   PROCEDURAL             CLEAR-BUFFER GOAL
-     1.320   MOTOR                  MOVE-CURSOR LOC CHUNK2-0
-     1.320   GOAL                   SET-BUFFER-CHUNK GOAL CHUNK3
-     1.320   PROCEDURAL             CONFLICT-RESOLUTION
-     1.520   PROCEDURAL             CONFLICT-RESOLUTION
-     1.570   PROCEDURAL             CONFLICT-RESOLUTION
-     1.670   PROCEDURAL             CONFLICT-RESOLUTION
-     1.720   PROCEDURAL             CONFLICT-RESOLUTION
-     1.770   PROCEDURAL             PRODUCTION-FIRED CLICK
-     1.770   PROCEDURAL             CLEAR-BUFFER GOAL
-     1.770   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     1.770   PROCEDURAL             CLEAR-BUFFER MANUAL
-     1.770   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     1.770   MOTOR                  CLICK-MOUSE
-     1.770   VISION                 Find-location
-     1.770   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION VISUAL-LOCATION2
-     1.770   PROCEDURAL             CONFLICT-RESOLUTION
-     1.820   PROCEDURAL             PRODUCTION-FIRED ATTEND
-VISUAL-LOCATION2-0
-   KIND  IMAGE
-   VALUE  IMAGE
-   HEIGHT  128
-   WIDTH  128
-   SCREEN-X  374
-   SCREEN-Y  654
+   SCREEN-X  424
+   SCREEN-Y  164
    DISTANCE  1080
    SIZE  46.0
-     1.820   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     1.820   PROCEDURAL             CLEAR-BUFFER VISUAL
-     1.820   PROCEDURAL             CONFLICT-RESOLUTION
-     1.905   VISION                 Encoding-complete VISUAL-LOCATION2-0 NIL
-     1.905   VISION                 SET-BUFFER-CHUNK VISUAL IMAGE2
-     1.905   PROCEDURAL             CONFLICT-RESOLUTION
-     1.955   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-INSTAN-LOC
-IMAGE2-0
-   SCREEN-POS  VISUAL-LOCATION2-0
-   VALUE  "brain-2"
+     1.270   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     1.270   PROCEDURAL             CLEAR-BUFFER VISUAL
+     1.270   PROCEDURAL             CONFLICT-RESOLUTION
+     1.355   VISION                 Encoding-complete CHUNK6-0 NIL
+     1.355   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK12
+     1.355   PROCEDURAL             CONFLICT-RESOLUTION
+     1.405   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK12-0
+   NAME  "brain-2"
+   SCREEN-POS  CHUNK6-0
    HEIGHT  128
    WIDTH  128
-   IMAGE  T
-     1.955   PROCEDURAL             CLEAR-BUFFER VISUAL
-     1.955   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     1.955   PROCEDURAL             CONFLICT-RESOLUTION
-     1.970   PROCEDURAL             CONFLICT-RESOLUTION
-Clicked image brain at 64 64
-     1.980   PROCEDURAL             CONFLICT-RESOLUTION
-     2.070   PROCEDURAL             CONFLICT-RESOLUTION
-     2.155   IMAGINAL               SET-BUFFER-CHUNK IMAGINAL CHUNK4
-     2.155   PROCEDURAL             CONFLICT-RESOLUTION
-     2.205   PROCEDURAL             PRODUCTION-FIRED MOVE
-     2.205   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     2.205   PROCEDURAL             CLEAR-BUFFER MANUAL
-     2.205   PROCEDURAL             CLEAR-BUFFER GOAL
-     2.205   MOTOR                  MOVE-CURSOR LOC CHUNK4-0
-     2.205   GOAL                   SET-BUFFER-CHUNK GOAL CHUNK5
-     2.205   PROCEDURAL             CONFLICT-RESOLUTION
-     2.405   PROCEDURAL             CONFLICT-RESOLUTION
-     2.455   PROCEDURAL             CONFLICT-RESOLUTION
-     2.555   PROCEDURAL             CONFLICT-RESOLUTION
-     2.605   PROCEDURAL             CONFLICT-RESOLUTION
-     2.655   PROCEDURAL             PRODUCTION-FIRED CLICK
-     2.655   PROCEDURAL             CLEAR-BUFFER GOAL
-     2.655   PROCEDURAL             CLEAR-BUFFER IMAGINAL
-     2.655   PROCEDURAL             CLEAR-BUFFER MANUAL
-     2.655   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
-     2.655   MOTOR                  CLICK-MOUSE
-     2.655   VISION                 Find-location
-     2.655   VISION                 FIND-LOC-FAILURE
-     2.655   PROCEDURAL             CONFLICT-RESOLUTION
-     2.805   PROCEDURAL             CONFLICT-RESOLUTION
-     2.855   PROCEDURAL             CONFLICT-RESOLUTION
-Clicked the second brain image given value this string
-     2.865   PROCEDURAL             CONFLICT-RESOLUTION
-     2.955   PROCEDURAL             CONFLICT-RESOLUTION
-     2.955   ------                 Stopped because no events left to process
+     1.405   PROCEDURAL             CLEAR-BUFFER VISUAL
+     1.405   PROCEDURAL             CLEAR-BUFFER MANUAL
+     1.405   MOTOR                  MOVE-CURSOR LOC CHUNK6-0
+     1.405   PROCEDURAL             CONFLICT-RESOLUTION
+     1.455   PROCEDURAL             CONFLICT-RESOLUTION
+     1.555   PROCEDURAL             CONFLICT-RESOLUTION
+     1.605   PROCEDURAL             CONFLICT-RESOLUTION
+     1.655   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     1.655   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     1.655   VISION                 Find-location
+     1.655   VISION                 FIND-LOC-FAILURE
+     1.655   PROCEDURAL             CONFLICT-RESOLUTION
+     1.705   PROCEDURAL             PRODUCTION-FIRED NEXT-ROW
+     1.705   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     1.705   VISION                 Find-location
+     1.705   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK1
+     1.705   PROCEDURAL             CONFLICT-RESOLUTION
+     1.755   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK1-1
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  164
+   SCREEN-Y  294
+   DISTANCE  1080
+   SIZE  46.0
+     1.755   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     1.755   PROCEDURAL             CLEAR-BUFFER VISUAL
+     1.755   PROCEDURAL             CONFLICT-RESOLUTION
+     1.840   VISION                 Encoding-complete CHUNK1-1 NIL
+     1.840   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK13
+     1.840   PROCEDURAL             CONFLICT-RESOLUTION
+     1.890   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK13-0
+   NAME  "brain-3"
+   SCREEN-POS  CHUNK1-0
+   HEIGHT  128
+   WIDTH  128
+     1.890   PROCEDURAL             CLEAR-BUFFER VISUAL
+     1.890   PROCEDURAL             CLEAR-BUFFER MANUAL
+     1.890   MOTOR                  MOVE-CURSOR LOC CHUNK1-0
+     1.890   PROCEDURAL             CONFLICT-RESOLUTION
+     1.990   PROCEDURAL             CONFLICT-RESOLUTION
+     2.040   PROCEDURAL             CONFLICT-RESOLUTION
+     2.173   PROCEDURAL             CONFLICT-RESOLUTION
+     2.223   PROCEDURAL             CONFLICT-RESOLUTION
+     2.273   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     2.273   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     2.273   VISION                 Find-location
+     2.273   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK4
+     2.273   PROCEDURAL             CONFLICT-RESOLUTION
+     2.323   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK4-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  294
+   SCREEN-Y  294
+   DISTANCE  1080
+   SIZE  46.0
+     2.323   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     2.323   PROCEDURAL             CLEAR-BUFFER VISUAL
+     2.323   PROCEDURAL             CONFLICT-RESOLUTION
+     2.408   VISION                 Encoding-complete CHUNK4-0 NIL
+     2.408   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK14
+     2.408   PROCEDURAL             CONFLICT-RESOLUTION
+     2.458   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK14-0
+   NAME  "brain-4"
+   SCREEN-POS  CHUNK4-0
+   HEIGHT  128
+   WIDTH  128
+     2.458   PROCEDURAL             CLEAR-BUFFER VISUAL
+     2.458   PROCEDURAL             CLEAR-BUFFER MANUAL
+     2.458   MOTOR                  MOVE-CURSOR LOC CHUNK4-0
+     2.458   PROCEDURAL             CONFLICT-RESOLUTION
+     2.558   PROCEDURAL             CONFLICT-RESOLUTION
+     2.608   PROCEDURAL             CONFLICT-RESOLUTION
+     2.708   PROCEDURAL             CONFLICT-RESOLUTION
+     2.758   PROCEDURAL             CONFLICT-RESOLUTION
+     2.808   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     2.808   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     2.808   VISION                 Find-location
+     2.808   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK7
+     2.808   PROCEDURAL             CONFLICT-RESOLUTION
+     2.858   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK7-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  424
+   SCREEN-Y  294
+   DISTANCE  1080
+   SIZE  46.0
+     2.858   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     2.858   PROCEDURAL             CLEAR-BUFFER VISUAL
+     2.858   PROCEDURAL             CONFLICT-RESOLUTION
+     2.943   VISION                 Encoding-complete CHUNK7-0 NIL
+     2.943   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK15
+     2.943   PROCEDURAL             CONFLICT-RESOLUTION
+     2.993   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK15-0
+   NAME  "brain-5"
+   SCREEN-POS  CHUNK7-0
+   HEIGHT  128
+   WIDTH  128
+     2.993   PROCEDURAL             CLEAR-BUFFER VISUAL
+     2.993   PROCEDURAL             CLEAR-BUFFER MANUAL
+     2.993   MOTOR                  MOVE-CURSOR LOC CHUNK7-0
+     2.993   PROCEDURAL             CONFLICT-RESOLUTION
+     3.043   PROCEDURAL             CONFLICT-RESOLUTION
+     3.143   PROCEDURAL             CONFLICT-RESOLUTION
+     3.193   PROCEDURAL             CONFLICT-RESOLUTION
+     3.243   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     3.243   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     3.243   VISION                 Find-location
+     3.243   VISION                 FIND-LOC-FAILURE
+     3.243   PROCEDURAL             CONFLICT-RESOLUTION
+     3.293   PROCEDURAL             PRODUCTION-FIRED NEXT-ROW
+     3.293   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     3.293   VISION                 Find-location
+     3.293   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK2
+     3.293   PROCEDURAL             CONFLICT-RESOLUTION
+     3.343   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK2-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  164
+   SCREEN-Y  424
+   DISTANCE  1080
+   SIZE  46.0
+     3.343   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     3.343   PROCEDURAL             CLEAR-BUFFER VISUAL
+     3.343   PROCEDURAL             CONFLICT-RESOLUTION
+     3.428   VISION                 Encoding-complete CHUNK2-0 NIL
+     3.428   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK16
+     3.428   PROCEDURAL             CONFLICT-RESOLUTION
+     3.478   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK16-0
+   NAME  "brain-6"
+   SCREEN-POS  CHUNK2-0
+   HEIGHT  128
+   WIDTH  128
+     3.478   PROCEDURAL             CLEAR-BUFFER VISUAL
+     3.478   PROCEDURAL             CLEAR-BUFFER MANUAL
+     3.478   MOTOR                  MOVE-CURSOR LOC CHUNK2-0
+     3.478   PROCEDURAL             CONFLICT-RESOLUTION
+     3.578   PROCEDURAL             CONFLICT-RESOLUTION
+     3.628   PROCEDURAL             CONFLICT-RESOLUTION
+     3.761   PROCEDURAL             CONFLICT-RESOLUTION
+     3.811   PROCEDURAL             CONFLICT-RESOLUTION
+     3.861   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     3.861   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     3.861   VISION                 Find-location
+     3.861   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK5
+     3.861   PROCEDURAL             CONFLICT-RESOLUTION
+     3.911   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK5-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  294
+   SCREEN-Y  424
+   DISTANCE  1080
+   SIZE  46.0
+     3.911   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     3.911   PROCEDURAL             CLEAR-BUFFER VISUAL
+     3.911   PROCEDURAL             CONFLICT-RESOLUTION
+     3.996   VISION                 Encoding-complete CHUNK5-0 NIL
+     3.996   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK17
+     3.996   PROCEDURAL             CONFLICT-RESOLUTION
+     4.046   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK17-0
+   NAME  "brain-7"
+   SCREEN-POS  CHUNK5-0
+   HEIGHT  128
+   WIDTH  128
+     4.046   PROCEDURAL             CLEAR-BUFFER VISUAL
+     4.046   PROCEDURAL             CLEAR-BUFFER MANUAL
+     4.046   MOTOR                  MOVE-CURSOR LOC CHUNK5-0
+     4.046   PROCEDURAL             CONFLICT-RESOLUTION
+     4.146   PROCEDURAL             CONFLICT-RESOLUTION
+     4.196   PROCEDURAL             CONFLICT-RESOLUTION
+     4.296   PROCEDURAL             CONFLICT-RESOLUTION
+     4.346   PROCEDURAL             CONFLICT-RESOLUTION
+     4.396   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     4.396   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     4.396   VISION                 Find-location
+     4.396   VISION                 SET-BUFFER-CHUNK VISUAL-LOCATION CHUNK8
+     4.396   PROCEDURAL             CONFLICT-RESOLUTION
+     4.446   PROCEDURAL             PRODUCTION-FIRED ATTEND
+CHUNK8-0
+   NAME  "brain"
+   HEIGHT  128
+   WIDTH  128
+   SCREEN-X  424
+   SCREEN-Y  424
+   DISTANCE  1080
+   SIZE  46.0
+     4.446   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     4.446   PROCEDURAL             CLEAR-BUFFER VISUAL
+     4.446   PROCEDURAL             CONFLICT-RESOLUTION
+     4.531   VISION                 Encoding-complete CHUNK8-0 NIL
+     4.531   VISION                 SET-BUFFER-CHUNK VISUAL CHUNK18
+     4.531   PROCEDURAL             CONFLICT-RESOLUTION
+     4.581   PROCEDURAL             PRODUCTION-FIRED ATTEND-AND-MOVE
+CHUNK18-0
+   NAME  "brain-8"
+   SCREEN-POS  CHUNK8-0
+   HEIGHT  128
+   WIDTH  128
+     4.581   PROCEDURAL             CLEAR-BUFFER VISUAL
+     4.581   PROCEDURAL             CLEAR-BUFFER MANUAL
+     4.581   MOTOR                  MOVE-CURSOR LOC CHUNK8-0
+     4.581   PROCEDURAL             CONFLICT-RESOLUTION
+     4.631   PROCEDURAL             CONFLICT-RESOLUTION
+     4.731   PROCEDURAL             CONFLICT-RESOLUTION
+     4.781   PROCEDURAL             CONFLICT-RESOLUTION
+     4.831   PROCEDURAL             PRODUCTION-FIRED FIND-NEXT
+     4.831   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     4.831   VISION                 Find-location
+     4.831   VISION                 FIND-LOC-FAILURE
+     4.831   PROCEDURAL             CONFLICT-RESOLUTION
+     4.881   PROCEDURAL             PRODUCTION-FIRED NEXT-ROW
+     4.881   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     4.881   VISION                 Find-location
+     4.881   VISION                 FIND-LOC-FAILURE
+     4.881   PROCEDURAL             CONFLICT-RESOLUTION
+     4.931   PROCEDURAL             PRODUCTION-FIRED NO-MORE
+     4.931   PROCEDURAL             CLEAR-BUFFER GOAL
+     4.931   PROCEDURAL             CLEAR-BUFFER VISUAL-LOCATION
+     4.931   PROCEDURAL             CONFLICT-RESOLUTION
+     4.931   ------                 Stopped because no events left to process
 """
