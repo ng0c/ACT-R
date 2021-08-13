@@ -112,7 +112,7 @@
          temp =l1
 )
 
-(P evaluate-first-if
+(P evaluate-if
    =goal> 
       isa read-letters
       state evaluate
@@ -129,7 +129,7 @@
    +imaginal>
       answer =l3)
 
-(P evaluate-second-if
+(P evaluate-elif
    =goal> 
       isa read-letters
       state evaluate
@@ -146,6 +146,21 @@
    +imaginal>
       answer =l2)
 
+(P evaluate-else
+   =goal> 
+      isa read-letters
+      state evaluate
+   ?imaginal>
+      state free
+   =imaginal>
+      letter1 =l1
+      - letter2 =l1
+      - letter3 =l1
+==>
+   =goal>
+      state respond
+   +imaginal>
+      answer =l1)
 
 (P respond
    =goal>
