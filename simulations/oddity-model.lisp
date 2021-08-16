@@ -1,6 +1,6 @@
 (clear-all)
 
-(define-model unit2
+(define-model oddity
     
 (sgp :v t :show-focus t)
 
