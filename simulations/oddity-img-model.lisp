@@ -2,7 +2,7 @@
 
 (define-model oddity
     
-(sgp :v t :show-focus t)
+(sgp :v t :show-focus t :needs-mouse t)
 
 
 (chunk-type read-letters state)
@@ -39,6 +39,8 @@
     =visual-location>
     ?visual>
         state free
+    ?manual>
+        state free
 ==>
     +visual>
         isa move-attention
@@ -46,6 +48,9 @@
         screen-pos =visual-location
     =goal>
         state attend
+    +manual>
+       isa move-cursor
+       loc =visual-location
 )
 
 (P encode-letter1
@@ -160,8 +165,11 @@
    =goal>
       state respond
    +imaginal>
-      answer =l1)
+      answer =l1
+)
 
+; responds incorrectly because the location for the right answer is
+; not stored
 (P respond
    =goal>
       ISA read-letters
@@ -176,7 +184,7 @@
       state done
    +manual>
       cmd click-mouse
-      key =ans
+      loc =imaginal
 )
 
 (goal-focus goal)

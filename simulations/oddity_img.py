@@ -22,6 +22,7 @@ def experiment(human=False):
     window = actr.open_exp_window("Image difference", width=400, height=400)
 
     actr.install_device(window)
+    actr.start_hand_at_mouse()
 
     text1 = foil
     text2 = foil
@@ -44,7 +45,7 @@ def experiment(human=False):
 
     actr.add_command("oddity-mouse-click", respond_to_mouse_click,
                      "oddity task output-mouse monitor")
-    actr.monitor_command("output-click", "oddity-mouse-click")
+    actr.monitor_command("click-mouse", "oddity-mouse-click")
 
     global response
     response = ''
@@ -53,14 +54,17 @@ def experiment(human=False):
         if actr.visible_virtuals_available():
             while response == '':
                 actr.process_events()
+                actr.run_n_events(2)
+                # run for up to 5 seconds using real-time if the window is visible
+                actr.run(5, human)
     else:
         actr.install_device(window)
         actr.run(10, True)
 
-    actr.remove_command_monitor("output-click", "oddity-mouse-click")
+    actr.remove_command_monitor("click-mouse", "oddity-mouse-click")
     actr.remove_command("oddity-mouse-click")
 
-    if response.lower() == target.lower():
+    if response == target:
         return True
     else:
         return False
