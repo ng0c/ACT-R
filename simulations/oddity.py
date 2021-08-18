@@ -21,7 +21,8 @@ def experiment(human=False):
                                "X", "Y", "Z"])
     target = items[0]
     foil = items[1]
-    window = actr.open_exp_window("Letter difference")
+    window = actr.open_exp_window(
+        "Letter difference", visible=human,  width=390, height=390)
     text1 = foil
     text2 = foil
     text3 = foil
