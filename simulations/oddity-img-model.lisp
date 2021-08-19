@@ -6,13 +6,12 @@
 
 
 (chunk-type read-letters state)
-(chunk-type array letter1 letter2 letter3 temp answer pos)
+(chunk-type array letter1 letter2 letter3 temp answer position1 position2 position3)
 
 (add-dm 
  (start isa chunk)
  (attend isa chunk)
  (evaluate isa chunk)
- (find-img isa chunk)
  (respond isa chunk)
  (done isa chunk)
  (goal isa read-letters state start))
@@ -59,6 +58,7 @@
         state attend
     =visual>
          value =text
+         screen-pos =pos
     ?imaginal>
         state free
     =imaginal>
@@ -69,6 +69,7 @@
     +imaginal>
          isa array
          letter1 =text
+         position1 =pos
     +visual-location>
          :attended new
 )
@@ -79,18 +80,22 @@
         state attend
     =visual>
          value =text
+         screen-pos =pos
     ?imaginal>
         state free
     =imaginal>
          letter1 =val
+         position1 =position1
 ==>
     =goal>
         state find-location
     +imaginal>
          isa array
          letter1 =val
+         position1 =position1
          letter2 =text
-         answer =val
+         position2 =pos
+         answer =position1
     +visual-location>
          :attended nil
 )
@@ -101,20 +106,26 @@
         state attend
     =visual>
          value =text
+         screen-pos =pos
     ?imaginal>
         state free
     =imaginal>
          letter1 =l1
+         position1 =position1
          letter2 =l2
+         position2 =position2
 ==>
     =goal>
         state evaluate
     +imaginal>
          isa array
          letter1 =l1
+         position1 =position1
          letter2 =l2
+         position2 =position2
          letter3 =text
-         temp =l1
+         position3 =pos
+         temp =position1
 )
 
 (P evaluate-if
@@ -128,11 +139,12 @@
       letter2 =l1
       temp =l1
       letter3 =l3
+      position3 =position3
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =l3
+      answer =position3
 )
 
 (P evaluate-elif
@@ -146,11 +158,12 @@
       letter2 =l2
       temp =l1
       letter3 =l1
+      position2 =position2
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =l2
+      answer =position2
 )
 
 (P evaluate-else
@@ -163,11 +176,12 @@
       letter1 =l1
       - letter2 =l1
       - letter3 =l1
+      position1 =position1
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =l1
+      answer =position1
 )
 
 ; responds incorrectly because the location for the right answer is
@@ -185,8 +199,10 @@
    =goal>
       state done
    +manual>
-      cmd click-mouse
-      loc =ans
+    ;;   cmd click-mouse
+    ;;   loc =ans
+        isa move-cursor
+        loc =ans
 )
 
 (goal-focus goal)
