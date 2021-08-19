@@ -184,8 +184,7 @@
       answer =position1
 )
 
-; responds incorrectly because the location for the right answer is
-; not stored
+; cursor moves to the right location - now needs to click it
 (P respond
    =goal>
       ISA read-letters
