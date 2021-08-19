@@ -6,13 +6,13 @@
 
 
 (chunk-type read-letters state)
-(chunk-type array letter1 letter2 letter3 temp answer)
+(chunk-type array letter1 letter2 letter3 temp answer pos)
 
 (add-dm 
  (start isa chunk)
  (attend isa chunk)
- (find-next isa chunk)
  (evaluate isa chunk)
+ (find-img isa chunk)
  (respond isa chunk)
  (done isa chunk)
  (goal isa read-letters state start))
@@ -62,7 +62,7 @@
     ?imaginal>
         state free
     =imaginal>
-         letter1 nil
+        letter1 nil
 ==>
     =goal>
         state find-location
@@ -132,7 +132,8 @@
    =goal>
       state respond
    +imaginal>
-      answer =l3)
+      answer =l3
+)
 
 (P evaluate-elif
    =goal> 
@@ -149,7 +150,8 @@
    =goal>
       state respond
    +imaginal>
-      answer =l2)
+      answer =l2
+)
 
 (P evaluate-else
    =goal> 
@@ -184,7 +186,7 @@
       state done
    +manual>
       cmd click-mouse
-      loc =imaginal
+      loc =ans
 )
 
 (goal-focus goal)

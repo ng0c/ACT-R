@@ -16,7 +16,8 @@ def experiment(human=False):
 
     actr.reset()
 
-    items = actr.permute_list(["dog.gif", "cake.gif"])
+    items = actr.permute_list(
+        ["dog.gif", "cake.gif", "boat.gif", "cat.gif", "gelato.gif", "horse.gif"])
     target = items[0]
     foil = items[1]
     window = actr.open_exp_window("Image difference", width=400, height=400)
