@@ -39,7 +39,7 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.ptrace) 1
   set window_config(.retrieval_history) 670x380+429+277
   set changed_window_list(.retrieval_history) 1
-  set window_config(.control_panel) 235x783+8+25
+  set window_config(.control_panel) 235x783+0+25
   set changed_window_list(.control_panel) 1
   set window_config(.param_viewer) 400x330+520+300
   set changed_window_list(.param_viewer) 1
@@ -49,7 +49,7 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.audicon) 1
   set window_config(.pick_buffers) 200x340+569+269
   set changed_window_list(.pick_buffers) 1
-  set window_config(.declarative) 734x386+142+302
+  set window_config(.declarative) 734x386+50+313
   set changed_window_list(.declarative) 1
   set window_config(.audicon_history) 734x300+353+300
   set changed_window_list(.audicon_history) 1

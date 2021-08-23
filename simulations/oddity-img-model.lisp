@@ -5,8 +5,8 @@
 (sgp :v t :show-focus t :needs-mouse t)
 
 
-(chunk-type read-letters state)
-(chunk-type array letter1 letter2 letter3 temp answer position1 position2 position3)
+(chunk-type see-images state)
+(chunk-type array image1 image2 image3 temp answer position1 position2 position3)
 
 (add-dm 
  (start isa chunk)
@@ -14,11 +14,11 @@
  (evaluate isa chunk)
  (respond isa chunk)
  (done isa chunk)
- (goal isa read-letters state start))
+ (goal isa see-images state start))
 
-(P find-unattended-letter
+(P find-unattended-image
     =goal>
-      ISA read-letters
+      ISA see-images
       state start
     ?imaginal>
       state free
@@ -28,12 +28,12 @@
     =goal>
         state find-location
     +imaginal>
-         letter1 nil
+         image1 nil
 )
 
 (P attend-letter
     =goal>
-        ISA read-letters
+        ISA see-images
         state find-location
     =visual-location>
     ?visual>
@@ -52,9 +52,9 @@
        loc =visual-location
 )
 
-(P encode-letter1
+(P encode-image1
     =goal>
-        ISA read-letters
+        ISA see-images
         state attend
     =visual>
          value =text
@@ -62,21 +62,21 @@
     ?imaginal>
         state free
     =imaginal>
-        letter1 nil
+        image1 nil
 ==>
     =goal>
         state find-location
     +imaginal>
          isa array
-         letter1 =text
+         image1 =text
          position1 =pos
     +visual-location>
          :attended new
 )
 
-(P encode-letter2
+(P encode-image2
     =goal>
-        ISA read-letters
+        ISA see-images
         state attend
     =visual>
          value =text
@@ -84,25 +84,25 @@
     ?imaginal>
         state free
     =imaginal>
-         letter1 =val
+         image1 =val
          position1 =position1
 ==>
     =goal>
         state find-location
     +imaginal>
          isa array
-         letter1 =val
+         image1 =val
          position1 =position1
-         letter2 =text
+         image2 =text
          position2 =pos
          answer =position1
     +visual-location>
          :attended nil
 )
 
-(P encode-letter3
+(P encode-image3
     =goal>
-        ISA read-letters
+        ISA see-images
         state attend
     =visual>
          value =text
@@ -110,35 +110,35 @@
     ?imaginal>
         state free
     =imaginal>
-         letter1 =l1
+         image1 =l1
          position1 =position1
-         letter2 =l2
+         image2 =l2
          position2 =position2
 ==>
     =goal>
         state evaluate
     +imaginal>
          isa array
-         letter1 =l1
+         image1 =l1
          position1 =position1
-         letter2 =l2
+         image2 =l2
          position2 =position2
-         letter3 =text
+         image3 =text
          position3 =pos
          temp =position1
 )
 
 (P evaluate-if
    =goal> 
-      isa read-letters
+      isa see-images
       state evaluate
    ?imaginal>
       state free
    =imaginal>
-      letter1 =l1
-      letter2 =l1
+      image1 =l1
+      image2 =l1
       temp =l1
-      letter3 =l3
+      image3 =l3
       position3 =position3
 ==>
    =goal>
@@ -149,15 +149,15 @@
 
 (P evaluate-elif
    =goal> 
-      isa read-letters
+      isa see-images
       state evaluate
    ?imaginal>
       state free
    =imaginal>
-      letter1 =l1
-      letter2 =l2
+      image1 =l1
+      image2 =l2
       temp =l1
-      letter3 =l1
+      image3 =l1
       position2 =position2
 ==>
    =goal>
@@ -168,14 +168,14 @@
 
 (P evaluate-else
    =goal> 
-      isa read-letters
+      isa see-images
       state evaluate
    ?imaginal>
       state free
    =imaginal>
-      letter1 =l1
-      - letter2 =l1
-      - letter3 =l1
+      image1 =l1
+      - image2 =l1
+      - image3 =l1
       position1 =position1
 ==>
    =goal>
@@ -187,7 +187,7 @@
 ; cursor moves to the right location - now needs to click it
 (P respond
    =goal>
-      ISA read-letters
+      ISA see-images
       state respond
    =imaginal>
       isa array
