@@ -31,7 +31,7 @@
          image1 nil
 )
 
-(P attend-letter
+(P attend-image
     =goal>
         ISA see-images
         state find-location
@@ -184,7 +184,6 @@
       answer =position1
 )
 
-; cursor moves to the right location - now needs to click it
 (P respond
    =goal>
       ISA see-images
@@ -198,8 +197,6 @@
    =goal>
       state done
    +manual>
-    ;;   cmd click-mouse
-    ;;   loc =ans
         isa move-cursor
         loc =ans
 )

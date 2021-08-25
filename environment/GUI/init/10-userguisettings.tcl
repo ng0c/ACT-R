@@ -43,28 +43,28 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.control_panel) 1
   set window_config(.param_viewer) 400x330+520+300
   set changed_window_list(.param_viewer) 1
-  set window_config(.stepper) 753x550+244+148
-  set changed_window_list(.stepper) 1
-  set window_config(.audicon) 870x150+285+350
-  set changed_window_list(.audicon) 1
   set window_config(.pick_buffers) 200x340+569+269
   set changed_window_list(.pick_buffers) 1
-  set window_config(.declarative) 734x386+50+313
-  set changed_window_list(.declarative) 1
+  set window_config(.audicon) 870x150+285+350
+  set changed_window_list(.audicon) 1
+  set window_config(.stepper) 753x550+244+148
+  set changed_window_list(.stepper) 1
   set window_config(.audicon_history) 734x300+353+300
   set changed_window_list(.audicon_history) 1
-  set window_config(.bold_graphs) 660x250+350+352
-  set changed_window_list(.bold_graphs) 1
+  set window_config(.declarative) 734x386+50+313
+  set changed_window_list(.declarative) 1
   set window_config(.reload_response) 888x328+146+268
   set changed_window_list(.reload_response) 1
+  set window_config(.bold_graphs) 660x250+350+352
+  set changed_window_list(.bold_graphs) 1
   set window_config(.event_queue) 800x180+290+277
   set changed_window_list(.event_queue) 1
-  set window_config(.whynot) 498x419+520+379
-  set changed_window_list(.whynot) 1
-  set window_config(.copyright) 1x1+520+305
-  set changed_window_list(.copyright) 1
   set window_config(.procedural) 500x400+361+228
   set changed_window_list(.procedural) 1
+  set window_config(.copyright) 1x1+520+305
+  set changed_window_list(.copyright) 1
+  set window_config(.whynot) 498x419+520+379
+  set changed_window_list(.whynot) 1
 }
 set gui_options(p_selected) #44DA22
 set gui_options(p_matched) #FCA31D
