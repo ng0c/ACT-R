@@ -6,7 +6,7 @@
 
 
 (chunk-type see-images state)
-(chunk-type array image1 image2 image3 temp answer position1 position2 position3)
+(chunk-type array image1 image2 image3 answer position1 position2 position3)
 
 (add-dm 
  (start isa chunk)
@@ -58,7 +58,7 @@
         state attend
     =visual>
          value =text
-         screen-pos =pos
+         screen-pos =current-pos
     ?imaginal>
         state free
     =imaginal>
@@ -69,7 +69,7 @@
     +imaginal>
          isa array
          image1 =text
-         position1 =pos
+         position1 =current-pos
     +visual-location>
          :attended new
 )
@@ -80,22 +80,22 @@
         state attend
     =visual>
          value =text
-         screen-pos =pos
+         screen-pos =current-pos
     ?imaginal>
         state free
     =imaginal>
          image1 =val
-         position1 =position1
+         position1 =pos1
 ==>
     =goal>
         state find-location
     +imaginal>
          isa array
          image1 =val
-         position1 =position1
+         position1 =pos1
          image2 =text
-         position2 =pos
-         answer =position1
+         position2 =current-pos
+         answer =pos1
     +visual-location>
          :attended nil
 )
@@ -106,26 +106,25 @@
         state attend
     =visual>
          value =text
-         screen-pos =pos
+         screen-pos =current-pos
     ?imaginal>
         state free
     =imaginal>
-         image1 =l1
-         position1 =position1
-         image2 =l2
-         position2 =position2
+         image1 =img1
+         position1 =pos1
+         image2 =img2
+         position2 =pos2
 ==>
     =goal>
         state evaluate
     +imaginal>
          isa array
-         image1 =l1
-         position1 =position1
-         image2 =l2
-         position2 =position2
+         image1 =img1
+         position1 =pos1
+         image2 =img2
+         position2 =pos2
          image3 =text
-         position3 =pos
-         temp =position1
+         position3 =current-pos
 )
 
 (P evaluate-if
@@ -135,16 +134,15 @@
    ?imaginal>
       state free
    =imaginal>
-      image1 =l1
-      image2 =l1
-      temp =l1
-      image3 =l3
-      position3 =position3
+      image1 =img1
+      image2 =img1
+      image3 =img3
+      position3 =pos3
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =position3
+      answer =pos3
 )
 
 (P evaluate-elif
@@ -154,16 +152,15 @@
    ?imaginal>
       state free
    =imaginal>
-      image1 =l1
-      image2 =l2
-      temp =l1
-      image3 =l1
-      position2 =position2
+      image1 =img1
+      image2 =img2
+      image3 =img1
+      position2 =pos2
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =position2
+      answer =pos2
 )
 
 (P evaluate-else
@@ -173,15 +170,15 @@
    ?imaginal>
       state free
    =imaginal>
-      image1 =l1
-      - image2 =l1
-      - image3 =l1
-      position1 =position1
+      image1 =img1
+      - image2 =img1
+      - image3 =img1
+      position1 =pos1
 ==>
    =goal>
       state respond
    +imaginal>
-      answer =position1
+      answer =pos1
 )
 
 (P respond
