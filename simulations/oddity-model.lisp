@@ -6,7 +6,7 @@
 
 
 (chunk-type read-letters state)
-(chunk-type array letter1 letter2 letter3 temp answer)
+(chunk-type array letter1 letter2 letter3 answer)
 
 (add-dm 
  (start isa chunk)
@@ -109,7 +109,6 @@
          letter1 =l1
          letter2 =l2
          letter3 =text
-         temp =l1
 )
 
 (P evaluate-if
@@ -121,7 +120,6 @@
    =imaginal>
       letter1 =l1
       letter2 =l1
-      temp =l1
       letter3 =l3
 ==>
    =goal>
@@ -138,7 +136,6 @@
    =imaginal>
       letter1 =l1
       letter2 =l2
-      temp =l1
       letter3 =l1
 ==>
    =goal>
