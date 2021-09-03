@@ -1,3 +1,6 @@
 {
-  "python.analysis.extraPaths": ["./tutorial/python"]
+  "python.analysis.extraPaths": [
+    "./tutorial/python",
+    "./simulations/numpy-1.11.1"
+  ]
 }

@@ -3,6 +3,8 @@ import actr
 
 actr.load_act_r_model("ACT-R:simulations;oddity-img-model.lisp")
 
+response = False
+
 
 def respond_to_mouse_click(model, key):
     global response
@@ -10,7 +12,7 @@ def respond_to_mouse_click(model, key):
     response = key
 
 
-def experiment():
+def experiment(human=False):
 
     actr.reset()
 
@@ -46,8 +48,22 @@ def experiment():
                      "oddity task output-mouse monitor")
     actr.monitor_command("click-mouse", "oddity-mouse-click")
 
-    actr.install_device(window)
-    actr.run(10, True)
+    global response
+    response = ''
+
+    if human == True:
+        if actr.visible_virtuals_available():
+            while response == '':
+                actr.process_events()
+
+    else:
+        actr.install_device(window)
+        actr.run(10, True)
 
     actr.remove_command_monitor("click-mouse", "oddity-mouse-click")
     actr.remove_command("oddity-mouse-click")
+    print('this is the response' + response)
+    if response.lower() == target.lower():
+        return True
+    else:
+        return False

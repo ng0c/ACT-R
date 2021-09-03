@@ -2,7 +2,7 @@
 
 (define-model oddity
     
-(sgp :v t :show-focus t :needs-mouse t)
+(sgp :v t :show-focus t :needs-mouse t :trace-detail high)
 
 
 (chunk-type see-images state)
@@ -12,6 +12,7 @@
  (start isa chunk)
  (attend isa chunk)
  (evaluate isa chunk)
+ (move-mouse isa chunk)
  (respond isa chunk)
  (done isa chunk)
  (goal isa see-images state start))
@@ -140,7 +141,7 @@
       position3 =pos3
 ==>
    =goal>
-      state respond
+      state move-mouse
    +imaginal>
       answer =pos3
 )
@@ -158,7 +159,7 @@
       position2 =pos2
 ==>
    =goal>
-      state respond
+      state move-mouse
    +imaginal>
       answer =pos2
 )
@@ -176,15 +177,15 @@
       position1 =pos1
 ==>
    =goal>
-      state respond
+      state move-mouse
    +imaginal>
       answer =pos1
 )
 
-(P respond
+(P move-mouse
    =goal>
       ISA see-images
-      state respond
+      state move-mouse
    =imaginal>
       isa array
       answer =ans
@@ -192,11 +193,25 @@
       state free
 ==>
    =goal>
-      state done
+      state respond
    +manual>
         isa move-cursor
         loc =ans
 )
+
+(P respond
+   =goal>
+      ISA see-images
+      state respond
+   ?manual>
+      state free
+==>
+   =goal>
+      state done
+   +manual>
+        cmd click-mouse
+)
+
 
 (goal-focus goal)
 )

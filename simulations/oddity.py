@@ -1,9 +1,23 @@
 
 import actr
+import numpy as np
+import matplotlib.pyplot as plt
 
 actr.load_act_r_model("ACT-R:simulations;oddity-model.lisp")
 
 response = False
+
+
+def run(trials, human=False):
+    correct = 0
+    incorrect = 0
+    for i in range(trials):
+        if experiment(human) == True:
+            correct += 1
+        else:
+            incorrect += 1
+
+    print_graph(correct, incorrect)
 
 
 def respond_to_key_press(model, key):
@@ -62,3 +76,17 @@ def experiment(human=False):
         return True
     else:
         return False
+
+
+def print_graph(x, y):
+    # creating the dataset
+    data = {'Correct': x, 'Incorrect': y}
+    courses = list(data.keys())
+    values = list(data.values())
+
+    # creating the bar plot
+    plt.bar(courses, values, color='#ffd700',
+            width=0.4)
+    plt.ylabel("Number of Trials")
+    plt.title("Oddity Model Performance")
+    plt.show()
