@@ -15,7 +15,7 @@ if $size_mismatch {
                                          -message "The screen resolution is not the same as it was the last time the Environment was used.  Should the window positions reset to the defaults?"]
 } else { set reset_window_sizes 0}
 if {$reset_window_sizes != "yes"} {
-  set window_config(.pgraph) 700x400+370+250
+  set window_config(.pgraph) 916x739+103+25
   set changed_window_list(.pgraph) 1
   set window_config(.whynotdm) 200x300+620+300
   set changed_window_list(.whynotdm) 1

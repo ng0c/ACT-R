@@ -3,7 +3,7 @@ import actr
 import numpy as np
 import matplotlib.pyplot as plt
 
-actr.load_act_r_model("ACT-R:simulations;oddity-model.lisp")
+actr.load_act_r_model("ACT-R:simulations;oddity-model-same.lisp")
 
 response = False
 
@@ -73,7 +73,7 @@ def experiment(human=False):
     actr.remove_command_monitor("output-key", "unit2-key-press")
     actr.remove_command("unit2-key-press")
 
-    if response.lower() == target.lower():
+    if response.lower() != target.lower():
         return True
     else:
         return False
@@ -89,5 +89,5 @@ def print_graph(x, y):
     plt.bar(courses, values, color='#2b5fb3',
             width=0.4)
     plt.ylabel("Number of Trials")
-    plt.title("Oddity Model Different")
+    plt.title("Oddity Model Same")
     plt.show()
