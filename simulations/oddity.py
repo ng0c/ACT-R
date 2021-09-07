@@ -8,17 +8,17 @@ actr.load_act_r_model("ACT-R:simulations;oddity-model.lisp")
 response = False
 
 
-def run(trials, human=False):
+def run(trials):
     correct = 0
     incorrect = 0
     for i in range(trials):
         print("Trial number " + str(i) + " :")
-        if experiment(human) is True:
+        if experiment() is True:
             correct += 1
         else:
             incorrect += 1
 
-    print_graph(correct, incorrect)
+    generate_graph(correct, incorrect)
 
 
 def respond_to_key_press(model, key):
@@ -27,7 +27,7 @@ def respond_to_key_press(model, key):
     response = key
 
 
-def experiment(human=False):
+def experiment():
 
     actr.reset()
 
@@ -36,8 +36,10 @@ def experiment(human=False):
                                "X", "Y", "Z"])
     target = items[0]
     foil = items[1]
+
     window = actr.open_exp_window(
-        "Letter difference", visible=human,  width=390, height=390)
+        "Letter difference", visible=True,  width=390, height=390)
+
     text1 = foil
     text2 = foil
     text3 = foil
@@ -61,14 +63,8 @@ def experiment(human=False):
     global response
     response = ''
 
-    if human == True:
-        if actr.visible_virtuals_available():
-            while response == '':
-                actr.process_events()
-
-    else:
-        actr.install_device(window)
-        actr.run(10, True)
+    actr.install_device(window)
+    actr.run(10, True)
 
     actr.remove_command_monitor("output-key", "unit2-key-press")
     actr.remove_command("unit2-key-press")
@@ -79,14 +75,14 @@ def experiment(human=False):
         return False
 
 
-def print_graph(x, y):
+def generate_graph(x, y):
     # creating the dataset
     data = {'Correct': x, 'Incorrect': y}
-    courses = list(data.keys())
+    response = list(data.keys())
     values = list(data.values())
 
     # creating the bar plot
-    plt.bar(courses, values, color='#2b5fb3',
+    plt.bar(response, values, color='#2b5fb3',
             width=0.4)
     plt.ylabel("Number of Trials")
     plt.title("Oddity Model Different")
