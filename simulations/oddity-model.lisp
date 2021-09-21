@@ -1,13 +1,17 @@
+
+
 (clear-all)
 
 (define-model oddity
-    
+
+; Default parameters
 (sgp :v t :show-focus t)
 
-
+; Optional declaration of slots
 (chunk-type read-letters state)
 (chunk-type array letter1 letter2 letter3 answer)
 
+; Initial knowledge in declarative memory
 (add-dm 
  (start isa chunk)
  (attend isa chunk)
@@ -17,6 +21,7 @@
  (done isa chunk)
  (goal isa read-letters state start))
 
+; Find location of any object that has not been seen before
 (P find-unattended-letter
     =goal>
       ISA read-letters
@@ -32,6 +37,7 @@
          letter1 nil
 )
 
+; Move attention to the object location
 (P attend-letter
     =goal>
         ISA read-letters
@@ -48,6 +54,7 @@
         state attend
 )
 
+; Store the object's attributes and move on to the next object
 (P encode-letter1
     =goal>
         ISA read-letters
@@ -111,6 +118,7 @@
          letter3 =text
 )
 
+; If: letter1 == letter2 then answer = letter3
 (P evaluate-if
    =goal> 
       isa read-letters
@@ -127,6 +135,7 @@
    +imaginal>
       answer =l3)
 
+; Else if: letter1 == letter3 then answer = letter2
 (P evaluate-elif
    =goal> 
       isa read-letters
@@ -143,6 +152,7 @@
    +imaginal>
       answer =l2)
 
+; Else: letter1 != letter2 && letter1 != letter3 then answer = letter1
 (P evaluate-else
    =goal> 
       isa read-letters
@@ -159,6 +169,7 @@
    +imaginal>
       answer =l1)
 
+; Retrieve the answer and press on the virtual keyboard
 (P respond
    =goal>
       ISA read-letters

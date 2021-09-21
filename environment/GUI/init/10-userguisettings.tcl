@@ -51,7 +51,7 @@ if {$reset_window_sizes != "yes"} {
   set changed_window_list(.stepper) 1
   set window_config(.audicon_history) 734x300+353+300
   set changed_window_list(.audicon_history) 1
-  set window_config(.declarative) 734x386+50+313
+  set window_config(.declarative) 734x386+234+276
   set changed_window_list(.declarative) 1
   set window_config(.reload_response) 888x328+146+268
   set changed_window_list(.reload_response) 1
